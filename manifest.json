@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "YouTube Playlist Length",
   "version": "1.0",
-  "description": "Shows the total length of YouTube playlists.",
+  "description": "Shows the total length of YouTube playlists, all in your browser - no external calls, no ads, no tracking, no nonsense.",
   "permissions": ["activeTab", "scripting"],
   "content_scripts": [
     {

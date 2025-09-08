@@ -20,7 +20,7 @@ function formatTime(seconds) {
 
 // Scrolls playlist until everything is loaded or 50h cap is hit
 async function computeFullPlaylistLength() {
-  await new Promise(resolve => setTimeout(resolve, 2000)); // arbitrary wait to ensure content is loaded
+  await new Promise(resolve => setTimeout(resolve, 500)); // arbitrary wait to ensure content is loaded
 
   const container = document.querySelector("ytd-playlist-video-list-renderer #contents");
   if (!container) return;
@@ -61,8 +61,40 @@ async function computeFullPlaylistLength() {
 }
 
 async function displayPlaylistLength() {
+    document.querySelectorAll("#playlist-length-display").forEach(el => el.remove());
+    await new Promise(resolve => setTimeout(resolve, 500)); // arbitrary wait to ensure content is loaded
+    const headers = document.querySelectorAll(".yt-page-header-view-model__page-header-content-metadata.yt-page-header-view-model__page-header-content-metadata--page-header-content-metadata-overlay.yt-content-metadata-view-model")
+    if (headers.length === 0) {
+        console.log("No headers found");
+        return;
+    }
+
+    headers.forEach(header => {
+        let lengthElement = header.querySelector("#playlist-length-display");
+        if (!lengthElement) {
+            lengthElement = document.createElement("div");
+            lengthElement.id = "playlist-length-display";
+            lengthElement.style.fontSize = "1.6rem";
+            lengthElement.style.color = "var(--yt-spec-text-secondary)";
+            lengthElement.textContent = "Calculating playlist length...";
+            header.appendChild(lengthElement);
+        } else {
+            lengthElement.textContent = "Calculating playlist length...";
+        }
+    });
+
     const lengthStr = await computeFullPlaylistLength();
-    console.log(lengthStr)
+
+    headers.forEach(header => {
+        const lengthElement = header.querySelector("#playlist-length-display");
+        if (lengthElement) {
+            if (lengthStr) {
+                lengthElement.textContent = `Total playlist length: ${lengthStr}`;
+            } else {
+                lengthElement.remove();
+            }
+        }
+    });
 }
 
 // Only trigger off yt-navigate-finish
