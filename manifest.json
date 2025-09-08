@@ -1,0 +1,14 @@
+{
+  "manifest_version": 3,
+  "name": "YouTube Playlist Length",
+  "version": "1.0",
+  "description": "Shows the total length of YouTube playlists.",
+  "permissions": ["activeTab", "scripting"],
+  "content_scripts": [
+    {
+      "matches": ["https://www.youtube.com/playlist*"],
+      "js": ["content.js"],
+      "css": ["style.css"]
+    }
+  ]
+}
