@@ -3,7 +3,7 @@
   "name": "YouTube Playlist Length",
   "version": "1.0",
   "description": "Shows the total length of YouTube playlists, all in your browser - no external calls, no ads, no tracking, no nonsense.",
-  "permissions": ["scripting"],
+  "permissions": [],
   "content_scripts": [
     {
       "matches": ["https://www.youtube.com/playlist*"],
